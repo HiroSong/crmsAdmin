@@ -2,22 +2,22 @@ import store from '@/vuex/store'
 // 引入axios
 import axios from 'axios'
 
-axios.defaults.headers.post['Content-Type'] = 'x-www-form-urlencoded'
+axios.defaults.headers.post['Content-Type'] = 'x-www-form-urlencoded;charset=UTF-8'
 
 const httpService = axios.create({
   // url前缀-'https://some-domain.com/api/'
   baseURL: '/api',
   // 请求超时时间
-  timeout: 3000,
+  timeout: 5000,
   withCredentials: true
 })
 
 httpService.interceptors.request.use(
   config => {
     // 根据条件加入token-安全携带
-    if (!store.state.token) { // 需自定义
+    if (store.state.token) { // 需自定义
       // 让每个请求携带token
-      config.headers['User-Token'] = store.state.token
+      config.headers['Authorization'] = 'Bearer ' + store.state.token
     }
     return config
   },

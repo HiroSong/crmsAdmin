@@ -14,49 +14,62 @@ const router = new Router({
     path: '/login',
     name: 'LoginPage',
     meta: {
-      title: '登录'
+      title: '登录',
+      keepAlive: true
     },
     component: resolve => require(['@/components/common/LoginPage'], resolve)
   }, {
     path: '/teachers',
     name: 'TeacherInfo',
     meta: {
-      title: '教师信息管理'
+      title: '教师信息管理',
+      requiresAuth: true,
+      requireRole: 'admin'
     },
     component: resolve => require(['@/components/admin/TeacherInfo'], resolve)
   }, {
     path: '/teachers/modify',
     name: 'ModifyTeacher',
     meta: {
-      title: '修改教师信息'
+      title: '修改教师信息',
+      requiresAuth: true,
+      requireRole: 'admin'
     },
     component: resolve => require(['@/components/admin/ModifyTeacher'], resolve)
   }, {
     path: '/teachers/create',
     name: 'CreateTeacher',
     meta: {
-      title: '创建教师用户'
+      title: '创建教师用户',
+      requiresAuth: true,
+      requireRole: 'admin',
+      keepAlive: true
     },
     component: resolve => require(['@/components/admin/CreateTeacher'], resolve)
   }, {
     path: '/students',
     name: 'StudentInfo',
     meta: {
-      title: '学生信息管理'
+      title: '学生信息管理',
+      requiresAuth: true,
+      requireRole: 'admin'
     },
     component: resolve => require(['@/components/admin/StudentInfo'], resolve)
   }, {
     path: '/students/modify',
     name: 'ModifyStudent',
     meta: {
-      title: '修改学生信息'
+      title: '修改学生信息',
+      requiresAuth: true,
+      requireRole: 'admin'
     },
     component: resolve => require(['@/components/admin/ModifyStudent'], resolve)
   }, {
     path: '/*',
     name: '404Page',
     meta: {
-      title: '404'
+      title: '404',
+      keepAlive: true
     },
     component: resolve => require(['@/components/common/404'], resolve)
   }]
@@ -75,7 +88,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (to.matched.some(record => record.meta.requireRole !== role) ||
       !token) {
-      next('/login')
+      next(false)
     } else {
       next()
     }

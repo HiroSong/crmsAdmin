@@ -1,17 +1,13 @@
 <template>
   <el-menu :collapse="isCollapse" class="full-height side-bar" :router="true">
-    <el-submenu>
-      <i class="iconfont icon-wenjianjia"></i>
-      <span class="title-text" slot="title">&nbsp;信息管理</span>
-      <el-menu-item index="/teachers">
-        <i class="iconfont icon-jiaoshi"></i>
-        <span class="title-text" slot="title">&nbsp;管理教师信息</span>
-      </el-menu-item>
-      <el-menu-item index="/students">
-        <i class="iconfont icon-xuesheng"></i>
-        <span class="title-text" slot="title">&nbsp;管理学生信息</span>
-      </el-menu-item>
-    </el-submenu>
+    <el-menu-item index="/teachers">
+      <i class="iconfont icon-jiaoshi"></i>
+      <span class="title-text" slot="title">&nbsp;管理教师信息</span>
+    </el-menu-item>
+    <el-menu-item index="/students">
+      <i class="iconfont icon-xuesheng"></i>
+      <span class="title-text" slot="title">&nbsp;管理学生信息</span>
+    </el-menu-item>
   </el-menu>
 </template>
 

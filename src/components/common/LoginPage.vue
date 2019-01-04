@@ -7,10 +7,10 @@
       <el-row type="flex" justify="center">
         <div class="title-text bold-text">翻转课堂管理员登录</div>
       </el-row>
-      <el-form ref="form" :model="form">
+      <el-form ref="loginForm" :model="form" :rules="rules">
         <el-row type="flex" justify="center" class="normal-gap">
           <el-col :span="5">
-            <el-form-item>
+            <el-form-item prop="username">
               <el-input
                 class="content-text"
                 placeholder="请输入用户名"
@@ -23,7 +23,7 @@
         </el-row>
         <el-row type="flex" justify="center" class="normal-gap">
           <el-col :span="5">
-            <el-form-item>
+            <el-form-item prop="password">
               <el-input
                 class="content-text"
                 placeholder="请输入密码"
@@ -73,23 +73,35 @@ export default {
         password: undefined
       },
       dialogVisible: false,
-      dialogMessage: undefined
+      dialogMessage: undefined,
+      rules: {
+        username: [{
+          required: true, message: '请输入用户名', trigger: 'blur'
+        }],
+        password: [{
+          required: true, message: '请输入密码', trigger: 'blur'
+        }]
+      }
     }
   },
   methods: {
     login() {
-      this.$router.push({ path: '/teachers' })
-      // this.$http.post('/login',
-      //   {
-      //     number: this.form.username,
-      //     password: this.form.password
-      //   }).then(response => {
-      //     this.$store.commit('SET_AUTH', response)
-      //     this.$router.push({ path: '/teachers' })
-      //   }).catch(error => {
-      //     this.dialogMessage = error.message
-      //     this.dialogVisible = true
-      //   })
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.$http.post('/user/login',
+            {
+              username: this.form.username,
+              password: this.form.password
+            }).then(response => {
+              this.$store.commit('SET_AUTH', response)
+              this.$router.push({ path: '/teachers' })
+            }).catch(error => {
+              this.dialogMessage = error.message
+              this.dialogVisible = true
+            })
+        }
+      });
+
     }
   }
 };

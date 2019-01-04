@@ -28,9 +28,9 @@ const mutations = {
     state.token = undefined
     state.role = undefined
     state.id = undefined
-    window.sessionStorage.setItem('token', undefined)
-    window.sessionStorage.setItem('role', undefined)
-    window.sessionStorage.setItem('id', undefined)
+    window.sessionStorage.removeItem('token')
+    window.sessionStorage.removeItem('role')
+    window.sessionStorage.removeItem('id')
   },
   SET_COLLAPSE(state, payload) {
     state.isCollapse = payload.isCollapse
@@ -38,17 +38,7 @@ const mutations = {
 }
 
 // 3、getters：提供外部获取state
-const getters = {
-  token: function (state) {
-    return state.token
-  },
-  role: function (state) {
-    return state.role
-  },
-  id: function (state) {
-    return state.id
-  }
-}
+const getters = {}
 
 // 4、actions：创建驱动方法改变mutations
 const actions = {
